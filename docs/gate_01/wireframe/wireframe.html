@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe — AI Agent CSKH Ví điện tử (T240 / P-240)</title>
+<style>
+:root{
+  --paper:#FFFFFF;
+  --canvas:#EDECEA;
+  --fill-1:#F6F5F3;
+  --fill-2:#E3E1DD;
+  --fill-3:#D2CFCA;
+  --line:#C7C4BE;
+  --line-strong:#8C8883;
+  --ink:#24221E;
+  --ink-2:#6A6761;
+  --ink-3:#94918B;
+  --redline:#A21B57;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:40px 24px 80px;
+  background:var(--canvas); color:var(--ink);
+  font-family:var(--sans); font-size:14px; line-height:1.55;
+}
+.doc{max-width:1080px;margin:0 auto}
+
+.doc-head{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:8px}
+.doc-head h1{font-size:22px;font-weight:600;margin:0 0 6px}
+.doc-head .meta{font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:.02em}
+.doc-head .legend{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.doc-head .legend b{color:var(--redline);font-weight:400}
+
+.plate{margin-top:48px;page-break-inside:avoid}
+.plate-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.plate-id{font-family:var(--mono);font-size:11px;background:var(--ink);color:var(--paper);padding:3px 7px;letter-spacing:.06em}
+.plate-head h2{font-size:16px;font-weight:600;margin:0}
+.plate-refs{font-family:var(--mono);font-size:11px;color:var(--redline);margin-left:auto}
+
+.frame{background:var(--paper);border:1px solid var(--line-strong);position:relative}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--fill-1);font-size:12px;color:var(--ink-2)}
+.bar .brand{font-weight:600;color:var(--ink);font-size:13px}
+.bar .spacer{margin-left:auto}
+
+.pin{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border:1px solid var(--redline);color:var(--redline);font-family:var(--mono);font-size:10px;border-radius:50%;background:var(--paper);flex:none}
+.pin-abs{position:absolute;z-index:3}
+
+.notes{margin:12px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}
+.notes li{display:flex;gap:8px;font-size:12px;color:var(--ink-2);line-height:1.5}
+.notes code{font-family:var(--mono);font-size:11px;color:var(--redline)}
+
+.ph{background:var(--fill-2);height:9px;border-radius:1px}
+.btn{display:inline-block;padding:7px 14px;border:1px solid var(--line-strong);background:var(--fill-1);font-size:12px;color:var(--ink)}
+.btn-solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn-line{background:var(--paper)}
+.field{border:1px solid var(--line);background:var(--paper);padding:9px 11px;font-size:12px;color:var(--ink-3)}
+.chip{display:inline-block;font-family:var(--mono);font-size:10px;border:1px solid var(--line-strong);padding:2px 6px;color:var(--ink-2);background:var(--fill-1)}
+.chip-ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.card{border:1px solid var(--line);background:var(--paper)}
+.card-t{padding:8px 12px;border-bottom:1px solid var(--line);background:var(--fill-1);font-size:11px;font-family:var(--mono);color:var(--ink-2);letter-spacing:.04em}
+.sect-t{font-size:11px;font-family:var(--mono);color:var(--ink-3);letter-spacing:.06em;margin:0 0 6px}
+.hatch{background:repeating-linear-gradient(45deg,var(--fill-1),var(--fill-1) 5px,var(--fill-2) 5px,var(--fill-2) 10px)}
+.dim{opacity:.45}
+
+/* S1 */
+.s1-body{padding:56px 0;display:flex;justify-content:center;background:var(--fill-1)}
+.s1-card{width:340px;background:var(--paper);border:1px solid var(--line);padding:24px}
+.s1-tabs{display:flex;border:1px solid var(--line-strong);margin-bottom:18px}
+.s1-tabs div{flex:1;text-align:center;padding:8px;font-size:12px}
+.s1-tabs .on{background:var(--ink);color:var(--paper)}
+
+/* S2 */
+.s2-thread{padding:18px 20px;display:flex;flex-direction:column;gap:14px;background:var(--fill-1);min-height:430px}
+.msg{max-width:74%;padding:10px 13px;border:1px solid var(--line);background:var(--paper);font-size:12.5px}
+.msg-u{align-self:flex-end;background:var(--fill-2);border-color:var(--line-strong)}
+.steps{align-self:flex-start;width:74%;border:1px dashed var(--line-strong);background:var(--paper);padding:10px 13px;font-family:var(--mono);font-size:11px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
+.report{align-self:flex-start;width:82%}
+.report .row{display:flex;gap:10px;padding:8px 12px;border-bottom:1px solid var(--fill-2);font-size:12px}
+.report .row span:first-child{width:104px;flex:none;color:var(--ink-3);font-family:var(--mono);font-size:10.5px;padding-top:2px}
+.composer{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line);align-items:center}
+
+/* S3 */
+.s3-wrap{display:flex;min-height:400px}
+.s3-nav{width:174px;flex:none;border-right:1px solid var(--line);background:var(--fill-1);padding:14px 0}
+.s3-nav div{padding:8px 16px;font-size:12px;color:var(--ink-2)}
+.s3-nav .on{background:var(--fill-3);color:var(--ink);border-left:2px solid var(--ink)}
+.s3-main{flex:1;padding:16px 18px;min-width:0}
+.filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--ink-3);font-weight:400;padding:7px 8px;border-bottom:1px solid var(--line-strong)}
+td{padding:9px 8px;border-bottom:1px solid var(--fill-2);vertical-align:middle}
+
+/* S4 */
+.s4-wrap{display:flex;min-height:520px}
+.s4-main{flex:1;padding:18px 20px;min-width:0;border-right:1px solid var(--line)}
+.s4-side{width:266px;flex:none;padding:18px 16px;background:var(--fill-1)}
+.block{margin-bottom:16px}
+.evi{font-family:var(--mono);font-size:11px;color:var(--ink-2);padding:5px 0;border-bottom:1px dotted var(--line)}
+.counter{border-left:3px solid var(--redline);background:var(--fill-1);padding:10px 12px;font-size:12px}
+.actions{display:flex;gap:8px;align-items:center;padding-top:14px;border-top:1px solid var(--line-strong);margin-top:16px;flex-wrap:wrap}
+.tl{position:relative;padding-left:16px}
+.tl-i{position:relative;padding-bottom:13px;font-size:11.5px;color:var(--ink-2)}
+.tl-i::before{content:"";position:absolute;left:-16px;top:5px;width:7px;height:7px;border:1px solid var(--line-strong);background:var(--paper);border-radius:50%}
+.tl-i::after{content:"";position:absolute;left:-13px;top:12px;bottom:0;width:1px;background:var(--line)}
+.tl-i:last-child::after{display:none}
+.tl-i b{display:block;color:var(--ink);font-weight:500}
+.tl-i em{font-family:var(--mono);font-size:10px;font-style:normal;color:var(--ink-3)}
+
+/* S5 modal */
+.veil{position:relative;min-height:430px;display:flex;align-items:center;justify-content:center;background:rgba(36,34,30,.42)}
+.modal{width:412px;background:var(--paper);border:1px solid var(--ink);padding:22px}
+
+@media print{body{background:#fff;padding:0}.plate{margin-top:34px}}
+@media (max-width:760px){.notes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<header class="doc-head">
+  <h1>Wireframe — AI Agent CSKH Ví điện tử &amp; Xử lý Khiếu nại Giao dịch</h1>
+  <div class="meta">FIN-05 · Nhóm T240 · Repo P-240 · Gate G1 · 02/08/2026</div>
+  <div class="legend">Bản khung, không phải bản thiết kế. Lớp chú thích <b>màu đỏ</b> là redline trỏ về mã yêu cầu trong <b>prd.md</b> — không thuộc giao diện.</div>
+</header>
+
+<!-- ============ S1 ============ -->
+<section class="plate">
+  <div class="plate-head">
+    <span class="plate-id">S1</span>
+    <h2>Đăng nhập &amp; chọn vai trò</h2>
+    <span class="plate-refs">FR-A1 · FR-A2</span>
+  </div>
+  <div class="frame">
+    <div class="bar"><span class="brand">Ví ABC · Trung tâm hỗ trợ</span><span class="spacer"></span><span>Tiếng Việt</span></div>
+    <div class="s1-body">
+      <div class="s1-card">
+        <div class="s1-tabs">
+          <div class="on">Khách hàng</div>
+          <div>Nhân viên CSKH</div>
+        </div>
+        <p class="sect-t">SỐ ĐIỆN THOẠI</p>
+        <div class="field" style="margin-bottom:14px">09xx xxx xxx</div>
+        <p class="sect-t">MẬT KHẨU</p>
+        <div class="field" style="margin-bottom:18px">••••••••</div>
+        <div class="btn btn-solid" style="display:block;text-align:center">Đăng nhập</div>
+        <div style="margin-top:14px;display:flex;align-items:center;gap:7px">
+          <span class="pin">1</span><span style="font-size:11.5px;color:var(--ink-3)">Vai trò nhân viên yêu cầu thêm mã nội bộ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ol class="notes">
+    <li><span class="pin">1</span><span>Cấp thẩm quyền L1 / L2 / Risk gán sẵn khi tạo tài khoản, không chọn lúc đăng nhập — <code>FR-A2</code></span></li>
+    <li><span class="pin">2</span><span>Sau đăng nhập, vai trò khách vào S2, vai trò nhân viên vào S3</span></li>
+  </ol>
+</section>
+
+<!-- ============ S2 ============ -->
+<section class="plate">
+  <div class="plate-head">
+    <span class="plate-id">S2</span>
+    <h2>Chat khiếu nại — khách hàng</h2>
+    <span class="plate-refs">FR-B1 · FR-B2 · FR-B3 · FR-C2 · FR-C4 · FR-C10</span>
+  </div>
+  <div class="frame">
+    <div class="bar"><span class="brand">Hỗ trợ giao dịch</span><span class="spacer"></span><span class="chip">Đã xác thực · Minh 09••••234</span></div>
+    <div class="s2-thread">
+
+      <div class="msg msg-u">Hôm qua tôi chuyển 500.000đ cho anh Nam mà bên kia bảo chưa nhận được.</div>
+
+      <div class="msg">Bạn chuyển vào khoảng thời gian nào trong ngày hôm qua? <span class="pin" style="vertical-align:-3px">1</span></div>
+
+      <div class="msg msg-u">Tầm 8 giờ tối.</div>
+
+      <div class="steps">
+        <div>✓ Xác thực khách hàng</div>
+        <div>✓ Trích xuất thông tin giao dịch</div>
+        <div>✓ Tra cứu giao dịch · 3 hệ thống</div>
+        <div>◍ Đối chiếu chính sách… <span class="pin" style="vertical-align:-3px">2</span></div>
+      </div>
+
+      <div class="card report">
+        <div class="card-t">KẾT QUẢ ĐIỀU TRA <span class="pin" style="float:right;margin-top:-2px">3</span></div>
+        <div class="row"><span>Giao dịch</span><span>TXN-8842106 · 500.000đ · 01/08 20:14</span></div>
+        <div class="row"><span>Trạng thái</span><span>Đang chờ đối tác xử lý (PENDING)</span></div>
+        <div class="row"><span>Nguyên nhân</span><span>Ngân hàng nhận đang chậm đối soát. Tiền đã trừ khỏi ví và đang được giữ ở trung gian, chưa thất lạc.</span></div>
+        <div class="row"><span>Hướng xử lý</span><span>Dự kiến hoàn tất trong 24 giờ. Nếu quá hạn, hệ thống tự động hoàn tiền về ví.</span></div>
+        <div class="row"><span>Mã theo dõi</span><span><span class="chip chip-ink">TK-20260802-0147</span> <span class="pin" style="vertical-align:-3px">4</span></span></div>
+      </div>
+
+      <div class="msg" style="align-self:flex-start">Bạn có muốn tôi tạo yêu cầu hoàn tiền ngay bây giờ không?</div>
+
+    </div>
+    <div class="composer">
+      <div class="field" style="flex:1">Nhập tin nhắn…</div>
+      <div class="btn btn-solid">Gửi</div>
+    </div>
+  </div>
+  <ol class="notes">
+    <li><span class="pin">1</span><span>Chỉ hỏi một trường thiếu mỗi lượt, trần 3 lượt rồi chuyển người — <code>FR-C4</code></span></li>
+    <li><span class="pin">2</span><span>Hiển thị tiến trình theo node, khách thấy hệ thống đang làm gì — <code>FR-B1</code></span></li>
+    <li><span class="pin">3</span><span>Bản báo cáo cho khách: che tên đối tác và thông tin nội bộ — <code>FR-B2 · FR-C10</code></span></li>
+    <li><span class="pin">4</span><span>Mã ticket tồn tại độc lập với phiên chat, tra lại được ở S6 — <code>FR-B3 · FR-F3</code></span></li>
+  </ol>
+</section>
+
+<!-- ============ S3 ============ -->
+<section class="plate">
+  <div class="plate-head">
+    <span class="plate-id">S3</span>
+    <h2>Hàng đợi phê duyệt — nhân viên CSKH</h2>
+    <span class="plate-refs">FR-E1 · FR-E4 · FR-D4 · FR-D11</span>
+  </div>
+  <div class="frame">
+    <div class="bar"><span class="brand">Bảng điều khiển CSKH</span><span class="spacer"></span><span class="chip">Hà · L1 · duyệt tới 200.000đ</span></div>
+    <div class="s3-wrap">
+      <nav class="s3-nav">
+        <div class="on">Chờ tôi duyệt · 7</div>
+        <div>Case của tôi</div>
+        <div>Đã xử lý</div>
+        <div>Vượt thẩm quyền · 2</div>
+        <div>Chỉ số</div>
+      </nav>
+      <div class="s3-main">
+        <div class="filters">
+          <span class="btn btn-line">Trạng thái ▾</span>
+          <span class="btn btn-line">Loại khiếu nại ▾</span>
+          <span class="btn btn-line">Hạn SLA ▾</span>
+          <span class="spacer" style="margin-left:auto"></span>
+          <span class="pin" style="align-self:center">1</span>
+        </div>
+        <table>
+          <tr>
+            <th>MÃ CASE</th><th>KHÁCH</th><th>LOẠI</th><th>ĐỀ XUẤT</th><th>TIN CẬY</th><th>SLA</th><th></th>
+          </tr>
+          <tr>
+            <td>RF-0147</td><td>Nguyễn V. Minh</td><td>Chờ đối tác</td><td>150.000đ</td><td>0.91</td><td>4h 12p</td>
+            <td><span class="btn" style="padding:4px 10px">Mở</span></td>
+          </tr>
+          <tr>
+            <td>RF-0146</td><td>Trần T. Lan</td><td>Trừ tiền 2 lần</td><td>89.000đ</td><td>0.96</td><td>6h 40p</td>
+            <td><span class="btn" style="padding:4px 10px">Mở</span></td>
+          </tr>
+          <tr>
+            <td>RF-0143</td><td>Lê H. Sơn</td><td>Trừ tiền 2 lần</td><td>178.000đ</td><td>0.62</td><td><span class="chip">quá hạn</span></td>
+            <td><span class="btn" style="padding:4px 10px">Mở</span></td>
+          </tr>
+          <tr class="dim">
+            <td>RF-0141</td><td>Phạm A. Tuấn</td><td>Lỗi hệ thống</td><td>2.400.000đ</td><td>0.88</td><td>1h 05p</td>
+            <td><span class="chip">Vượt thẩm quyền <span class="pin" style="vertical-align:-3px">2</span></span></td>
+          </tr>
+          <tr class="dim">
+            <td>RF-0139</td><td>Đỗ M. Hằng</td><td>Chuyển nhầm</td><td>—</td><td>0.44</td><td>3h 20p</td>
+            <td><span class="chip">Chờ điều tra thêm</span></td>
+          </tr>
+        </table>
+        <div style="margin-top:14px;display:flex;align-items:center;gap:7px">
+          <span class="pin">3</span><span style="font-size:11.5px;color:var(--ink-3)">Độ tin cậy thấp được đánh dấu để ưu tiên soát kỹ, không tự động từ chối</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ol class="notes">
+    <li><span class="pin">1</span><span>Lọc theo trạng thái, loại, hạn SLA; sắp xếp mặc định theo SLA gần hết hạn — <code>FR-E1 · FR-D11</code></span></li>
+    <li><span class="pin">2</span><span>Case vượt thẩm quyền hiện ở dạng mờ, không mở duyệt được, đã tự định tuyến lên L2 — <code>FR-D4 · FR-E4</code></span></li>
+    <li><span class="pin">3</span><span>Độ tin cậy là tín hiệu cho người duyệt, không phải điều kiện tự động</span></li>
+  </ol>
+</section>
+
+<!-- ============ S4 ============ -->
+<section class="plate">
+  <div class="plate-head">
+    <span class="plate-id">S4</span>
+    <h2>Chi tiết case &amp; hồ sơ đề xuất hoàn tiền</h2>
+    <span class="plate-refs">FR-E2 · FR-E3 · FR-E5 · FR-D5 · FR-D7 · FR-I3</span>
+  </div>
+  <div class="frame">
+    <div class="bar"><span class="brand">RF-0146 · Trần T. Lan</span><span class="chip">TXN-8839004</span><span class="spacer"></span><span class="chip">PENDING_APPROVAL</span></div>
+    <div class="s4-wrap">
+      <div class="s4-main">
+
+        <div class="block">
+          <p class="sect-t">KẾT LUẬN ĐIỀU TRA</p>
+          <div style="font-size:13px">Giao dịch bị capture hai lần do lỗi hệ thống ví. Lần thứ hai không có yêu cầu tương ứng từ phía khách.</div>
+          <div style="margin-top:7px"><span class="chip">Độ tin cậy 0.96</span> <span class="chip">DOUBLE_CHARGE</span></div>
+        </div>
+
+        <div class="block">
+          <p class="sect-t">BẰNG CHỨNG <span class="pin" style="vertical-align:-2px">1</span></p>
+          <div class="evi">EV-41182 · authorize · 89.000đ · 31/07 14:22:07</div>
+          <div class="evi">EV-41183 · capture · 89.000đ · 31/07 14:22:09</div>
+          <div class="evi">EV-41190 · capture · 89.000đ · 31/07 14:22:41 ← bất thường</div>
+          <div class="evi">EV-41191 · settle · 178.000đ · 31/07 23:00:00</div>
+        </div>
+
+        <div class="block">
+          <p class="sect-t">CĂN CỨ CHÍNH SÁCH</p>
+          <div style="font-size:12px"><span class="chip">CS-4.2.1</span> Lỗi kỹ thuật từ phía ví dẫn tới trừ tiền trùng lặp được hoàn 100% trong vòng 30 ngày.</div>
+          <div style="font-size:11px;color:var(--ink-3);margin-top:5px;font-family:var(--mono)">hiệu lực 01/01/2026 – nay · áp theo thời điểm giao dịch</div>
+        </div>
+
+        <div class="block counter">
+          <b style="font-weight:600">Lý do có thể từ chối</b> <span class="pin" style="vertical-align:-3px">2</span><br>
+          Khách đã liên hệ về giao dịch này một lần vào 01/08 và được trả lời là đang chờ đối soát. Cần xác nhận chưa có khoản hoàn nào được xử lý ngoài hệ thống.
+        </div>
+
+        <div class="block">
+          <p class="sect-t">ĐỀ XUẤT</p>
+          <div style="display:flex;gap:22px;font-size:13px">
+            <div><span style="color:var(--ink-3);font-size:11px;font-family:var(--mono)">LOẠI</span><br>Hoàn toàn phần</div>
+            <div><span style="color:var(--ink-3);font-size:11px;font-family:var(--mono)">SỐ TIỀN</span><br><b>89.000đ</b> <span class="pin" style="vertical-align:-3px">3</span></div>
+            <div><span style="color:var(--ink-3);font-size:11px;font-family:var(--mono)">THẨM QUYỀN</span><br>L1</div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:6px">Ghi chú của người duyệt… (bắt buộc khi từ chối hoặc sửa số tiền)</div>
+
+        <div class="actions">
+          <span class="btn btn-solid">Duyệt hoàn tiền</span>
+          <span class="btn btn-line">Từ chối</span>
+          <span class="btn btn-line">Sửa số tiền</span>
+          <span class="btn btn-line">Yêu cầu điều tra thêm</span>
+          <span class="pin" style="align-self:center">4</span>
+        </div>
+      </div>
+
+      <aside class="s4-side">
+        <p class="sect-t">DÒNG THỜI GIAN <span class="pin" style="vertical-align:-2px">5</span></p>
+        <div class="tl">
+          <div class="tl-i"><b>Tiếp nhận khiếu nại</b><em>02/08 09:14 · khách</em></div>
+          <div class="tl-i"><b>Phân loại DOUBLE_CHARGE</b><em>02/08 09:14 · agent</em></div>
+          <div class="tl-i"><b>Tra cứu 4 giao dịch lân cận</b><em>02/08 09:14 · tool</em></div>
+          <div class="tl-i"><b>Đối chiếu CS-4.2.1</b><em>02/08 09:15 · agent</em></div>
+          <div class="tl-i"><b>Kiểm chứng dữ kiện · đạt</b><em>02/08 09:15 · guard</em></div>
+          <div class="tl-i"><b>Tiền kiểm quy tắc cứng · đạt</b><em>02/08 09:15 · code</em></div>
+          <div class="tl-i"><b>Chờ phê duyệt</b><em>02/08 09:15 · hệ thống</em></div>
+        </div>
+        <div style="margin-top:14px;font-size:11px;color:var(--ink-3);line-height:1.5">
+          Mọi bước ghi vào audit log, xuất được ra bản giải trình.
+        </div>
+      </aside>
+    </div>
+  </div>
+  <ol class="notes">
+    <li><span class="pin">1</span><span>Bằng chứng trỏ tới ledger event cụ thể, không phải diễn giải của model — <code>FR-C8</code></span></li>
+    <li><span class="pin">2</span><span>Phản chứng bắt buộc có, chống hiệu ứng neo khiến người duyệt bấm cho qua — <code>FR-D5</code></span></li>
+    <li><span class="pin">3</span><span>Số tiền do code tính từ biểu phí, model chỉ chọn loại hoàn — <code>FR-D3</code></span></li>
+    <li><span class="pin">4</span><span>Bốn lối ra; sửa số tiền vượt ngưỡng sẽ kích hoạt S5 — <code>FR-D7 · FR-E3</code></span></li>
+    <li><span class="pin">5</span><span>Dòng thời gian dựng từ audit log theo <code>case_id</code> — <code>FR-E5 · FR-I3</code></span></li>
+  </ol>
+</section>
+
+<!-- ============ S5 ============ -->
+<section class="plate">
+  <div class="plate-head">
+    <span class="plate-id">S5</span>
+    <h2>Trạng thái — vượt thẩm quyền khi sửa số tiền</h2>
+    <span class="plate-refs">FR-D4 · FR-D7</span>
+  </div>
+  <div class="frame">
+    <div class="bar"><span class="brand">RF-0146 · Trần T. Lan</span><span class="spacer"></span><span class="chip">PENDING_APPROVAL</span></div>
+    <div class="veil">
+      <div class="modal">
+        <p class="sect-t">SỐ TIỀN VƯỢT THẨM QUYỀN</p>
+        <div style="font-size:13px;margin-bottom:14px">
+          Bạn đang sửa số tiền hoàn từ <b>89.000đ</b> lên <b>890.000đ</b>. Mức này vượt thẩm quyền L1 của bạn.
+        </div>
+        <div style="font-size:12px;color:var(--ink-2);margin-bottom:18px">
+          Yêu cầu sẽ được chuyển sang hàng đợi L2 kèm ghi chú của bạn. Bạn không thể tự duyệt sau khi sửa. <span class="pin" style="vertical-align:-3px">1</span>
+        </div>
+        <div class="field" style="margin-bottom:16px">Lý do sửa số tiền… (bắt buộc)</div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <span class="btn btn-line">Hủy</span>
+          <span class="btn btn-solid">Chuyển lên L2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ol class="notes">
+    <li><span class="pin">1</span><span>Chặn ở tầng service chứ không chỉ ẩn nút; sửa số tiền luôn kéo theo tính lại thẩm quyền — <code>FR-D4</code></span></li>
+    <li><span class="pin">2</span><span>Cùng cơ chế áp dụng cho ngưỡng Risk team ở mức 5.000.000đ</span></li>
+  </ol>
+</section>
+
+<!-- ============ S6 ============ -->
+<section class="plate">
+  <div class="plate-head">
+    <span class="plate-id">S6</span>
+    <h2>Tra cứu ticket — khách quay lại</h2>
+    <span class="plate-refs">FR-B3 · FR-B5 · FR-F2 · FR-F3</span>
+  </div>
+  <div class="frame">
+    <div class="bar"><span class="brand">Tra cứu khiếu nại</span><span class="spacer"></span><span class="chip">Đã xác thực · Minh 09••••234</span></div>
+    <div style="padding:22px 24px;background:var(--fill-1);min-height:280px">
+      <div style="display:flex;gap:8px;max-width:440px;margin-bottom:20px">
+        <div class="field" style="flex:1">TK-20260802-0147</div>
+        <div class="btn btn-solid">Tra cứu</div>
+      </div>
+      <div class="card" style="max-width:640px">
+        <div class="card-t">TK-20260802-0147 · CHỜ ĐỐI TÁC XỬ LÝ <span class="pin" style="float:right;margin-top:-2px">1</span></div>
+        <div style="padding:14px 16px">
+          <div class="tl">
+            <div class="tl-i"><b>Tiếp nhận</b><em>02/08 09:14</em></div>
+            <div class="tl-i"><b>Đã điều tra xong · chờ đối tác</b><em>02/08 09:15</em></div>
+            <div class="tl-i dim"><b>Dự kiến hoàn tất</b><em>trước 03/08 20:14</em></div>
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:var(--ink-2)">
+            Nếu quá hạn trên mà tiền chưa về, hệ thống sẽ tự động tạo yêu cầu hoàn tiền. <span class="pin" style="vertical-align:-3px">2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ol class="notes">
+    <li><span class="pin">1</span><span>Ticket sống độc lập với phiên chat, tra được sau nhiều ngày — <code>FR-F3</code></span></li>
+    <li><span class="pin">2</span><span>Khách nhận thông báo khi yêu cầu hoàn tiền được duyệt hoặc từ chối — <code>FR-B5</code></span></li>
+  </ol>
+</section>
+
+</div>
+</body>
+</html>
